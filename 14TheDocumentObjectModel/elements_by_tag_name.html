@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Elements by tag name</title>
+</head>
+<body>
+<h1>Heading with a <span>span</span> element.</h1>
+<p>A paragraph with <span>one</span>, <span>two</span>
+spans.</p>
+<script>
+const byTagName = (node, tagName) => {
+  const descendantArray = [];
+  const checkNode = node => {
+    Array.from(node.childNodes).forEach(child => {
+      if (child.nodeType === 1) {
+        if (child.nodeName.toLowerCase() === tagName) { descendantArray.push(child) };
+        checkNode(child);
+      }
+    });
+  };
+  checkNode(node);
+  return descendantArray;
+};
+console.log(byTagName(document.body, "h1").length);
+// → 1
+console.log(byTagName(document.body, "span").length);
+// → 3
+let para = document.querySelector("p");
+console.log(byTagName(para, "span").length);
+// → 2
+
+</script>
+</body>
+</html>
