@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Balloon</title>
+</head>
+<body>
+    <p>🎈</p>
+<script>
+// Your code here
+const balloon = document.querySelector("p");
+let size;
+const setSize = (element, newSize) => {
+  size = newSize;
+  element.style.fontSize = size + "px";
+};
+const INITIAL_SIZE = 16;
+setSize(balloon, INITIAL_SIZE);
+
+const createNewEmojiNode = emoji => {
+  const newEmoji = document.createElement("p");
+  newEmoji.textContent = emoji;
+  setSize(newEmoji, size);
+
+  return newEmoji;
+};
+
+const handleKeydown = e => {
+  if (e.key == "ArrowUp") {
+    if (size > 48) {
+      const balloonAfterExplosion = createNewEmojiNode("💥");
+      document.body.replaceChild(balloonAfterExplosion, balloon);
+      document.body.removeEventListener("keydown", handleKeydown);
+    } else {
+      setSize(balloon, size * 1.1);
+      e.preventDefault();
+    }
+  } else if (e.key == "ArrowDown") {
+    setSize(balloon, size * 0.9);
+    e.preventDefault();
+  }
+};
+document.body.addEventListener("keydown", handleKeydown);
+</script>
+</body>
+</html>
