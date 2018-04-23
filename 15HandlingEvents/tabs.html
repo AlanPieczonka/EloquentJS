@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Tabs</title>
+</head>
+<body>
+<tab-panel>
+    <div data-tabname="one">Tab one</div>
+    <div data-tabname="two">Tab two</div>
+    <div data-tabname="three">Tab three</div>
+</tab-panel>
+
+<script>
+const asTabs = node => {
+  const tabs = Array.from(node.children).map(child => {
+    let button = document.createElement("button");
+    button.textContent = child.getAttribute("data-tabname");
+    let tab = { child, button };
+    button.addEventListener("click", () => changeTab(tab));
+    return tab;
+  });
+  let tabList = document.createElement("div");
+  for (const { button } of tabs) tabList.appendChild(button);
+  node.insertBefore(tabList, node.firstChild);
+  const changeTab = tabToSelect => {
+    for (const tab of tabs) {
+      const selected = tab == tabToSelect;
+      tab.button.style.color = selected ? "orange" : "";
+      tab.button.style.border = selected ? "5px solid blue" : "none";
+      tab.child.style.display = selected ? "" : "none";
+    }
+  };
+  changeTab(tabs[0]);
+};
+asTabs(document.querySelector("tab-panel"));
+</script>
+</body>
+</html>
