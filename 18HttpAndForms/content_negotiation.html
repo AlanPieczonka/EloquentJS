@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Content negotiation</title>
+</head>
+<body>
+<script>
+const URL = "https://eloquentjavascript.net/author",
+      TYPES = ["text/plain",
+               "text/html",
+               "application/json",
+               "application/rainbows+unicorns"];
+
+const showResponses = async () => {
+  for (const type of TYPES) {
+    let response = await fetch(URL, { headers: { accept: type } });
+    console.log(response);
+  }
+};
+showResponses();
+</script>
+</body>
+</html>
